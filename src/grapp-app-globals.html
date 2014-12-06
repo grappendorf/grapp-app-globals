@@ -1,0 +1,22 @@
+ <!-- build:process -->
+<!--
+<%= copyright %>
+Element: <%= pkg.name %>
+Version: <%= pkg.version %>
+Description: <%= pkg.description %>
+-->
+<!-- /build -->
+
+<link href="../polymer/polymer.html" rel="import">
+
+<polymer-element name="grapp-app-globals">
+
+  <!-- build:script inline dist -->
+  <script src="grapp-app-globals.js"></script>
+  <!-- /build -->
+
+</polymer-element>
+
+<polymer-element name="grapp-app-global-value" noscript attributes="name value">
+</polymer-element>
+

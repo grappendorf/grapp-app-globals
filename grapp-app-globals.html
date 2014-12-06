@@ -1,0 +1,45 @@
+ 
+<!--
+Copyright (c) 2014 Dirk Grappendorf, www.grappendorf.net. All rights reserved.
+This code may only be used under the MIT style license found in the file LICENSE.txt.
+
+Element: grapp-app-globals
+Version: 0.0.0
+Description: A web component for setting/getting global values
+-->
+
+
+<link href="../polymer/polymer.html" rel="import">
+
+<polymer-element name="grapp-app-globals">
+
+<script type="text/javascript">(function() {
+  var values;
+
+  values = {};
+
+  Polymer('grapp-app-globals', {
+    attached: function() {
+      var globalValue, key, value, _i, _len, _ref, _results;
+      _ref = this.querySelectorAll('grapp-app-global-value');
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        globalValue = _ref[_i];
+        values[globalValue.getAttribute('name')] = globalValue.getAttribute('value');
+      }
+      _results = [];
+      for (key in values) {
+        value = values[key];
+        _results.push(this[key] = value);
+      }
+      return _results;
+    }
+  });
+
+}).call(this);
+</script>
+
+</polymer-element>
+
+<polymer-element name="grapp-app-global-value" noscript attributes="name value">
+</polymer-element>
+

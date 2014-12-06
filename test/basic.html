@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>grapp-app-globals basic tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <script src="../lib/web-component-tester/browser.js"></script>
+  <script src="../lib/coffee-script/extras/coffee-script.js"></script>
+
+  <link href="../grapp-app-globals.html" rel="import">
+</head>
+<body>
+
+  <grapp-app-globals id="set">
+    <grapp-app-global-value name="foo" value="bar"></grapp-app-global-value>
+  </grapp-app-globals>
+
+  <grapp-app-globals id="get">
+  </grapp-app-globals>
+
+  <script type="text/coffeescript">
+
+    describe 'setting and getting a global value', ->
+
+      it 'should retrieve the previously set value', ->
+        element = document.querySelector '#get'
+        expect(element.foo).to.equal 'bar'
+
+  </script>
+
+  <script>
+  </script>
+
+</body>
+</html>

@@ -11,7 +11,7 @@ Description: A web component for setting/getting global values
 
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="grapp-app-globals">
+<polymer-element name="grapp-app-globals" attributes="foo">
 
 <script type="text/javascript">(function() {
   var instances, values;
@@ -21,6 +21,9 @@ Description: A web component for setting/getting global values
   values = {};
 
   Polymer('grapp-app-globals', {
+    computed: {
+      foo: null
+    },
     detached: function() {
       return instances.splice(instances.indexOf(this), 1);
     },
@@ -48,7 +51,11 @@ Description: A web component for setting/getting global values
       _results = [];
       for (key in values) {
         value = values[key];
-        _results.push(this[key] = value);
+        if (/\{\{(.+)\}\}/.test(value)) {
+          _results.push(this.computed[key] = value.slice(2, -2));
+        } else {
+          _results.push(this[key] = value);
+        }
       }
       return _results;
     }

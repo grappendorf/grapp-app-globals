@@ -3,6 +3,8 @@ values = {}
 
 Polymer 'grapp-app-globals',
 
+  computed: {}
+
   detached: ->
     instances.splice instances.indexOf(this), 1
 
@@ -19,4 +21,7 @@ Polymer 'grapp-app-globals',
 
   updateValues: ->
     for key, value of values
-      @[key] = value
+      if /\{\{(.+)\}\}/.test value
+        @computed[key] = value[2..-3]
+      else
+        @[key] = value

@@ -40,3 +40,8 @@ Attributes
     - *type:* string
 
     The value of the global value.
+
+Content
+-------
+
+You can also specifiy the global value as the content of `grapp-app-global-value` element.

@@ -30,7 +30,11 @@ Description: A web component for setting/getting global values
       _ref = this.querySelectorAll('grapp-app-global-value');
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         globalValue = _ref[_i];
-        values[globalValue.getAttribute('name')] = globalValue.getAttribute('value');
+        if (globalValue.hasAttribute('value')) {
+          values[globalValue.getAttribute('name')] = globalValue.getAttribute('value');
+        } else {
+          values[globalValue.getAttribute('name')] = globalValue.textContent;
+        }
       }
       _results = [];
       for (_j = 0, _len1 = instances.length; _j < _len1; _j++) {

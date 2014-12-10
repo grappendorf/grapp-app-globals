@@ -9,7 +9,10 @@ Polymer 'grapp-app-globals',
   ready: ->
     instances.push this
     for globalValue in @querySelectorAll 'grapp-app-global-value'
-      values[globalValue.getAttribute 'name'] = globalValue.getAttribute 'value'
+      if globalValue.hasAttribute 'value'
+        values[globalValue.getAttribute 'name'] = globalValue.getAttribute 'value'
+      else
+        values[globalValue.getAttribute 'name'] = globalValue.textContent
 
     for instance in instances
       instance.updateValues()

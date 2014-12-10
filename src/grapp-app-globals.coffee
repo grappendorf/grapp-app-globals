@@ -3,9 +3,11 @@ values = {}
 
 Polymer 'grapp-app-globals',
 
-  attached: ->
-    instances.push this
+  detached: ->
+    instances.splice instances.indexOf(this), 1
 
+  ready: ->
+    instances.push this
     for globalValue in @querySelectorAll 'grapp-app-global-value'
       values[globalValue.getAttribute 'name'] = globalValue.getAttribute 'value'
 

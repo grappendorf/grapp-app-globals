@@ -15,9 +15,14 @@
 
   <grapp-app-globals id="set">
     <grapp-app-global-value name="foo" value="bar"></grapp-app-global-value>
+    <grapp-app-global-value name="key" value="old_value"></grapp-app-global-value>
   </grapp-app-globals>
 
   <grapp-app-globals id="get">
+  </grapp-app-globals>
+
+  <grapp-app-globals id="change">
+    <grapp-app-global-value name="key" value="new_value"></grapp-app-global-value>
   </grapp-app-globals>
 
   <script type="text/coffeescript">
@@ -27,6 +32,12 @@
       it 'should retrieve the previously set value', ->
         element = document.querySelector '#get'
         expect(element.foo).to.equal 'bar'
+
+    describe 'changing and getting a global value', ->
+
+      it 'should retrieve the new value', ->
+        element = document.querySelector '#get'
+        expect(element.key).to.equal 'new_value'
 
   </script>
 

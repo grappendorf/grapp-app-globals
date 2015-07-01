@@ -1,17 +1,17 @@
- 
+
 <!--
-Copyright (c) 2014 Dirk Grappendorf, www.grappendorf.net. All rights reserved.
+Copyright (c) 2014-2015 Dirk Grappendorf, www.grappendorf.net. All rights reserved.
 This code may only be used under the MIT style license found in the file LICENSE.txt.
 
 Element: grapp-app-globals
-Version: 0.0.3
+Version: 0.1.0
 Description: A web component for setting/getting global values
 -->
 
 
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="grapp-app-globals">
+<dom-module id="grapp-app-globals">
 
 <script type="text/javascript">(function() {
   var instances, values;
@@ -20,50 +20,102 @@ Description: A web component for setting/getting global values
 
   values = {};
 
-  Polymer('grapp-app-globals', {
+  Polymer({
+    is: 'grapp-app-globals',
     computed: {},
     detached: function() {
       return instances.splice(instances.indexOf(this), 1);
     },
-    ready: function() {
-      var globalValue, instance, _i, _j, _len, _len1, _ref, _results;
+    attached: function() {
+      var i, len, ref, setter;
       instances.push(this);
-      _ref = this.querySelectorAll('grapp-app-global-value');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        globalValue = _ref[_i];
-        if (globalValue.hasAttribute('value')) {
-          values[globalValue.getAttribute('name')] = globalValue.getAttribute('value');
-        } else {
-          values[globalValue.getAttribute('name')] = globalValue.textContent;
-        }
+      ref = Polymer.dom(this).querySelectorAll('grapp-app-globals-set');
+      for (i = 0, len = ref.length; i < len; i++) {
+        setter = ref[i];
+        values[setter.key] = setter.value;
       }
-      _results = [];
-      for (_j = 0, _len1 = instances.length; _j < _len1; _j++) {
-        instance = instances[_j];
-        _results.push(instance.updateValues());
-      }
-      return _results;
+      return this._updateAllInstances();
     },
-    updateValues: function() {
-      var key, value, _results;
-      _results = [];
-      for (key in values) {
-        value = values[key];
-        if (/\{\{(.+)\}\}/.test(value)) {
-          _results.push(this.computed[key] = value.slice(2, -2));
-        } else {
-          _results.push(this[key] = value);
-        }
+    updateValue: function(key, value) {
+      values[key] = value;
+      return this._updateAllInstances(key);
+    },
+    _updateAllInstances: function(key) {
+      var i, instance, len, results;
+      results = [];
+      for (i = 0, len = instances.length; i < len; i++) {
+        instance = instances[i];
+        results.push(instance._update(key));
       }
-      return _results;
+      return results;
+    },
+    _update: function(key) {
+      var getter, i, len, ref, results, selector;
+      selector = 'grapp-app-globals-get' + (key ? "[key=" + key + "]" : '');
+      ref = Polymer.dom(this).querySelectorAll(selector);
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        getter = ref[i];
+        results.push(getter.value = values[getter.key]);
+      }
+      return results;
     }
   });
 
 }).call(this);
 </script>
 
-</polymer-element>
+</dom-module>
 
-<polymer-element name="grapp-app-global-value" noscript attributes="name value">
-</polymer-element>
+<dom-module id="grapp-app-globals-set">
 
+<script type="text/javascript">(function() {
+  Polymer({
+    is: 'grapp-app-globals-set',
+    properties: {
+      key: {
+        type: String
+      },
+      value: {
+        type: String,
+        observer: '_valueChanged'
+      }
+    },
+    _valueChanged: function() {
+      var parent;
+      parent = Polymer.dom(this).parentNode;
+      while (parent && parent.tagName !== 'GRAPP-APP-GLOBALSX') {
+        parent = parent.parentNode;
+      }
+      if (!parent) {
+        throw new Error("grapp-app-globals-set with key '" + this.key + "' is not inside a grapp-app-globals element!");
+      }
+      return parent.updateValue(this.key, this.value);
+    }
+  });
+
+}).call(this);
+</script>
+
+</dom-module>
+
+ <dom-module id="grapp-app-globals-get">
+
+<script type="text/javascript">(function() {
+  Polymer({
+    is: 'grapp-app-globals-get',
+    properties: {
+      key: {
+        type: String
+      },
+      value: {
+        type: String,
+        notify: true
+      }
+    }
+  });
+
+}).call(this);
+</script>
+
+ </dom-module>

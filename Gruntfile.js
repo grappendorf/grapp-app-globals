@@ -1,13 +1,5 @@
 module.exports = function(grunt) {
 
-  var mapDotDotUrlToLib = function(req, res, next) {
-    var url_parts = req.url.split('/');
-    if (url_parts.length > 2 && ['lib', 'test'].indexOf(url_parts[1]) == -1) {
-      req.url = '/lib' + req.url;
-    }
-    return next();
-  };
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('bower.json'),
 
@@ -63,13 +55,14 @@ module.exports = function(grunt) {
     htmlbuild: {
       dist: {
         src: 'src/*.html',
-        dest: './',
+        dest: 'build/',
         options: {
           scripts: {
-            dist: ['build/*.js']
+            'grapp-app-globals': ['build/grapp-app-globals.js'],
+            'grapp-app-globals-set': ['build/grapp-app-globals-set.js'],
+            'grapp-app-globals-get': ['build/grapp-app-globals-get.js']
           },
           styles: {
-            dist: ['build/*.css']
           },
           data: {
             copyright: grunt.file.read('tmpl/copyright.tmpl')
@@ -78,17 +71,19 @@ module.exports = function(grunt) {
       }
     },
 
-    connect: {
-      server: {
-        options: {
-          port: 8080,
-          base: '.',
-          middleware: function(connect, options, middlewares) {
-            middlewares.unshift(mapDotDotUrlToLib);
-            return middlewares;
-          }
-        }
+    replace: {
+      dist: {
+        src: 'build/*.html',
+        dest: './',
+        replacements: [{
+          from: /href="..\/lib\/([^"]+)"/g,
+          to: 'href="../$1"'
+        }]
       }
+    },
+
+    connect: {
+      server: {}
     },
 
     watch: {
@@ -130,6 +125,12 @@ module.exports = function(grunt) {
     changelog: {
       options: {
       }
+    },
+
+    shell: {
+      test: {
+        command: 'xvfb-run -a ./bin/grunt wct-test'
+      }
     }
   });
 
@@ -143,9 +144,33 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-html-build');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-text-replace');
 
   grunt.registerTask('build', 'Compile all assets and create the distribution files',
-    ['less', 'coffeelint', 'coffee', 'htmlbuild']);
+    ['less', 'coffeelint', 'coffee', 'htmlbuild', 'replace']);
+
+  grunt.registerTask('wct-test', function() {
+    var
+        done = this.async(),
+        wct = require('web-component-tester'),
+        options = {
+          remote: false,
+          persistent: false,
+          root: '.',
+          plugins: {
+            local: {
+              browsers: ['chrome']
+            }
+          }
+        };
+    wct.test(options, function() {
+      done();
+      process.exit(0);
+    });
+  });
+
+  grunt.registerTask('test', 'Test the web application', ['shell:test']);
 
   grunt.task.renameTask('bump', 'bumpversion');
 

@@ -1,27 +1,30 @@
 instances = []
 values = {}
 
-Polymer 'grapp-app-globals',
+Polymer
+
+  is: 'grapp-app-globals'
 
   computed: {}
 
   detached: ->
     instances.splice instances.indexOf(this), 1
 
-  ready: ->
+  attached: ->
     instances.push this
-    for globalValue in @querySelectorAll 'grapp-app-global-value'
-      if globalValue.hasAttribute 'value'
-        values[globalValue.getAttribute 'name'] = globalValue.getAttribute 'value'
-      else
-        values[globalValue.getAttribute 'name'] = globalValue.textContent
+    for setter in Polymer.dom(@).querySelectorAll 'grapp-app-globals-set'
+      values[setter.key] = setter.value
+    @_updateAllInstances()
 
+  updateValue: (key, value) ->
+    values[key] = value
+    @_updateAllInstances key
+
+  _updateAllInstances: (key) ->
     for instance in instances
-      instance.updateValues()
+      instance._update (key)
 
-  updateValues: ->
-    for key, value of values
-      if /\{\{(.+)\}\}/.test value
-        @computed[key] = value[2..-3]
-      else
-        @[key] = value
+  _update: (key) ->
+    selector = 'grapp-app-globals-get' + (if key then "[key=#{key}]" else '')
+    for getter in Polymer.dom(@).querySelectorAll selector
+      getter.value = values[getter.key]

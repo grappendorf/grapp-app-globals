@@ -2,12 +2,9 @@
 <html>
 
 <head>
-
   <title>grapp-app-globals web component</title>
-
-  <script src="lib/webcomponentsjs/webcomponents.min.js"></script>
-  <link href="grapp-app-globals.html" rel="import">
-
+  <script src='lib/webcomponentsjs/webcomponents-lite.min.js'></script>
+  <link href="build/grapp-app-globals.html" rel="import">
 </head>
 
 <body>
@@ -28,33 +25,52 @@
 
   <h2>Demo</h2>
 
-  <template is="auto-binding">
+  <template is="dom-bind">
 
-    <h3>Define a global value</h3>
+    <h3>Set a global value</h3>
 
     <p>
       &lt;grapp-app-globals&gt;<br>
-      &nbsp;&nbsp;&lt;grapp-app-global-value name="foo" value="bar"&gt;&lt;/grapp-app-globals-value&gt;<br>
+      &nbsp;&nbsp;&lt;grapp-app-globals-set key"foo" value="bar"&gt;&lt;/grapp-app-globals-set&gt;<br>
+      &nbsp;&nbsp;&lt;grapp-app-globals-set key"time" value="[[time]]"&gt;&lt;/grapp-app-globals-set&gt;<br>
       &lt;/grapp-app-globals&gt;
     </p>
 
     <grapp-app-globals>
-      <grapp-app-global-value name="foo" value="bar"></grapp-app-globals-value>
+      <grapp-app-globals-set key="foo" value="bar"></grapp-app-globals-set>
+      <grapp-app-globals-set key="time" value="[[time]]"></grapp-app-globals-set>
     </grapp-app-globals>
 
-    <h3>Access the global value</h3>
+    <h3>Get a global value</h3>
 
-    <grapp-app-globals id="globals">
+    <grapp-app-globals>
+      <grapp-app-globals-get key="foo" value="{{foo}}"></grapp-app-globals-get>
+      <grapp-app-globals-get key="time" value="{{currentTime}}"></grapp-app-globals-get>
     </grapp-app-globals>
 
     <p>
       &lt;grapp-app-globals id="globals"&gt;<br>
+      &nbsp;&nbsp;&lt;grapp-app-globals-get key="foo" value="{{foo}}"&gt;&lt;/grapp-app-globals-get&gt;<br>
+      &nbsp;&nbsp;&lt;grapp-app-globals-get key="time" value="{{currentTime}}"&gt;&lt;/grapp-app-globals-get&gt;<br>
       &lt;/grapp-app-globals&gt;<br>
       <br>
-      { { $.globals.foo } } => <b>{{$.globals.foo}}</b>
+      [ [ foo ] ] => <b>[[foo]]</b><br>
+      [ [ currentTime ] ] => <b>[[currentTime]]</b>
+    </p>
+
+    <p>
+      The time property is regularily updated by a setInterval() function.
     </p>
 
   </template>
+
+  <script>
+    var t = document.querySelector('template');
+    t.time = '?';
+    setInterval(function () {
+      t.time = new Date().toLocaleTimeString();
+    }, 1000);
+  </script>
 
   <script src="//localhost:35729/livereload.js"></script>
 

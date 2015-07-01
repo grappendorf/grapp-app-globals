@@ -84,7 +84,7 @@ Description: A web component for setting/getting global values
     _valueChanged: function() {
       var parent;
       parent = Polymer.dom(this).parentNode;
-      while (parent && parent.tagName !== 'GRAPP-APP-GLOBALSX') {
+      while (parent && parent.tagName !== 'GRAPP-APP-GLOBALS') {
         parent = parent.parentNode;
       }
       if (!parent) {

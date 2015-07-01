@@ -1,3 +1,12 @@
+<a name="0.1.0"></a>
+## 0.1.0 (2015-07-01)
+
+
+#### Features
+
+* Upgrade to Polymer 1.0 ([e51da7d0](http://github.com/grappendorf/grapp-app-globals/commit/e51da7d06c52309a2baa31dc92c75f75cfd44fb9))
+
+
 <a name="0.0.3"></a>
 ### 0.0.3 (2014-12-10)
 

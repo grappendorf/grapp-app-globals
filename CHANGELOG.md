@@ -1,3 +1,12 @@
+<a name="0.1.1"></a>
+### 0.1.1 (2015-07-06)
+
+
+#### Features
+
+* Add a getValue() method for retrieving global values ([47b806f1](http://github.com/grappendorf/grapp-app-globals/commit/47b806f11999f927e7303436e11e8be10c5cbe5b))
+
+
 <a name="0.1.0"></a>
 ## 0.1.0 (2015-07-01)
 

@@ -1,7 +1,7 @@
 {
   "name": "grapp-app-globals",
   "description": "A web component for setting/getting global values",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "grapp-app-globals.html",
   "license": "MIT",
   "ignore": [

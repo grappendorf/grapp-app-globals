@@ -40,6 +40,9 @@ Description: A web component for setting/getting global values
       values[key] = value;
       return this._updateAllInstances(key);
     },
+    getValue: function(key) {
+      return values[key];
+    },
     _updateAllInstances: function(key) {
       var i, instance, len, results;
       results = [];

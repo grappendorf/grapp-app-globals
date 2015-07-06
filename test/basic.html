@@ -16,11 +16,11 @@
 
   <template is="dom-bind">
     <grapp-app-globals>
-      <grapp-app-globals-set key="foo_attribute" value="bar_attribute"></grapp-app-globals-set>
+      <grapp-app-globals-set key="foo_attribute" value="bar_value"></grapp-app-globals-set>
       <grapp-app-globals-set key="changing" value="[[changingValue]]"></grapp-app-globals-set>
     </grapp-app-globals>
 
-    <grapp-app-globals>
+    <grapp-app-globals id="globals">
       <grapp-app-globals-get id="foo_attribute" key="foo_attribute"></grapp-app-globals-get>
       <grapp-app-globals-get id="changing" key="changing"></grapp-app-globals-get>
     </grapp-app-globals>
@@ -30,10 +30,13 @@
 
     describe 'setting and getting a global attribute value', ->
 
-      it 'should retrieve the set value', ->
+      it 'should retrieve the set value with a get tag', ->
         element = document.querySelector '#foo_attribute'
-        console.log element.value
-        expect(element.value).to.equal 'bar_attribute'
+        expect(element.value).to.equal 'bar_value'
+
+      it 'should retrieve the set value with the getValue() function', ->
+        element = document.querySelector '#globals'
+        expect(element.getValue('foo_attribute')).to.equal 'bar_value'
 
     describe 'changing and getting a global value', ->
 

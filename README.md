@@ -26,6 +26,13 @@ and accessed by `grapp-app-globals-get` elements:
 The value of a setter can be a binding expression. If the expression values changes,
 all getters are updated.
 
+Methods
+-------
+
+  * **getValue(key)**
+	
+    Retrieve a global value by its key
+	  
 
 grapp-app-globals-set
 =====================

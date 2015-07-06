@@ -20,6 +20,9 @@ Polymer
     values[key] = value
     @_updateAllInstances key
 
+  getValue: (key) ->
+    values[key]
+
   _updateAllInstances: (key) ->
     for instance in instances
       instance._update (key)

@@ -31,8 +31,8 @@
 
     <p>
       &lt;grapp-app-globals&gt;<br>
-      &nbsp;&nbsp;&lt;grapp-app-globals-set key"foo" value="bar"&gt;&lt;/grapp-app-globals-set&gt;<br>
-      &nbsp;&nbsp;&lt;grapp-app-globals-set key"time" value="[[time]]"&gt;&lt;/grapp-app-globals-set&gt;<br>
+      &nbsp;&nbsp;&lt;grapp-app-globals-set key="foo" value="bar"&gt;&lt;/grapp-app-globals-set&gt;<br>
+      &nbsp;&nbsp;&lt;grapp-app-globals-set key="time" value="[[time]]"&gt;&lt;/grapp-app-globals-set&gt;<br>
       &lt;/grapp-app-globals&gt;
     </p>
 
@@ -43,13 +43,13 @@
 
     <h3>Get a global value</h3>
 
-    <grapp-app-globals id="globals">
+    <grapp-app-globals>
       <grapp-app-globals-get key="foo" value="{{foo}}"></grapp-app-globals-get>
       <grapp-app-globals-get key="time" value="{{currentTime}}"></grapp-app-globals-get>
     </grapp-app-globals>
 
     <p>
-      &lt;grapp-app-globals id="globals"&gt;<br>
+      &lt;grapp-app-globals&gt;<br>
       &nbsp;&nbsp;&lt;grapp-app-globals-get key="foo" value="{{foo}}"&gt;&lt;/grapp-app-globals-get&gt;<br>
       &nbsp;&nbsp;&lt;grapp-app-globals-get key="time" value="{{currentTime}}"&gt;&lt;/grapp-app-globals-get&gt;<br>
       &lt;/grapp-app-globals&gt;<br>

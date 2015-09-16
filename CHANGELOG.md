@@ -1,3 +1,12 @@
+<a name="0.1.5"></a>
+### 0.1.5 (2015-09-17)
+
+
+#### Bug Fixes
+
+* workaround: wct currently expects to find some bower components in the "componen ([9ccb06ed](http://github.com/grappendorf/grapp-app-globals/commit/9ccb06edf004f88d8bbd80c155b66fdcb518fcd1))
+
+
 <a name="0.1.4"></a>
 ### 0.1.4 (2015-09-09)
 
